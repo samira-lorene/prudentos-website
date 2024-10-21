@@ -10,9 +10,43 @@ export default function SizeGuide({
 }) {
   // TODO: get static size chart
 
+  {
+    /* 
+    Königsblau 
+Wasserfall Kleid Brust jede Größe 
+Tailie 77 cm 
+Hüfte 91cm 
+
+Viscose 70%
+Polyester 30% 
+
+
+Kleid Türkis
+76 cm Brust 
+68 cmTaille 
+88 cm Hüfte 
+Stoff ist dehnbar 
+
+Nylon 60%
+Viscose 30%
+Lcyra 10%
+
+
+2 teiler
+Brust verställbar 
+72cm Tailie 
+90cm Hüfte 
+
+Viscose 70%
+Polyester 30% 
+
+Alles mit Handwäsche waschen
+    */
+  }
+
   return (
     <div
-      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white h-full shadow-sm md:border-l transition-transform transform duration-700 ${
+      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
         openModal ? "translate-x-0" : "translate-x-full"
       }`}
       style={{ zIndex: openModal ? 1000 : 50 }} // Increase z-index when sidebar is open
