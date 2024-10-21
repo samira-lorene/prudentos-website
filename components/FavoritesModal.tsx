@@ -37,7 +37,7 @@ export default function FavoritesModal({
 
   return (
     <div
-      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white h-full shadow-sm md:border-l transition-transform transform duration-700 ${
+      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
         openModal ? "translate-x-0" : "translate-x-full"
       }`}
       style={{ zIndex: openModal ? 1000 : 50 }} // Increase z-index when sidebar is open

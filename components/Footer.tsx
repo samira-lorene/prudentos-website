@@ -26,6 +26,12 @@ export default function Footer() {
             >
               <span>Contact</span>
             </a>
+            <a
+              href="/privacy"
+              className="footerLink opacity-65 flex cursor-pointer gap-6 items-center"
+            >
+              <span>Privacy</span>
+            </a>
             <div className="flex footerLink logoText border-none gap-6 items-center">
               <span className="tracking-tighter opacity-65">
                 © PRUDENTOS 2024

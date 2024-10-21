@@ -87,15 +87,12 @@ export default function Product({ variantId, ...props }: ProductProps) {
     });
   }, [api]);
 
-  // onClick={() => handleClickOnProduct(props.id)}
   const handleClickOnProduct = () => {
     if (pathname.includes("/products")) {
       // we are already on the product page, no need to navigate there
       return;
     }
-
     // navigate to the product page of the individual product
-
     router.push(`/products/${props.handle}/?id=${props.id}`);
   };
 
@@ -131,7 +128,7 @@ export default function Product({ variantId, ...props }: ProductProps) {
                 } flex-col transition-opacity duration-200`}
               >
                 <Image
-                  className="object-cover"
+                  className="object-cover object-top"
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                   src={media.node.image.url}
