@@ -41,6 +41,7 @@ export default function CartModal({
   const setNumberOfCartItems = useStore(
     (state: any) => state.setNumberOfCartItems
   );
+  const setOpenCartModal = useStore((state: any) => state.setOpenCartModal);
 
   const fetchProduct = async () => {
     try {
@@ -94,6 +95,13 @@ export default function CartModal({
       setNumberOfCartItems(numberOfCartItems - 1);
     }
     fetchProduct();
+  };
+
+  const handleCheckout = () => {
+    setNumberOfCartItems(0);
+    setOpenCartModal();
+    window.open(checkoutUrl, "_blank");
+    window.location.replace("/");
   };
 
   return (
@@ -247,7 +255,7 @@ export default function CartModal({
               <span className="pl-1">EUR</span>
             </p>
           </div>
-          <a className={`checkoutButton`} href={checkoutUrl}>
+          <button className={`checkoutButton`} onClick={handleCheckout}>
             <div
               className={``}
               style={{
@@ -264,7 +272,7 @@ export default function CartModal({
                 <span>Checkout</span>
               </div>
             </div>
-          </a>
+          </button>
         </div>
       )}
     </div>
