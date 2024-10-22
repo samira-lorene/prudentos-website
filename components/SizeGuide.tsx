@@ -8,13 +8,12 @@ export default function SizeGuide({
   openModal: any;
   closeModal: any;
 }) {
-  // TODO: get static size chart
-
   {
     /* 
     Königsblau 
-Wasserfall Kleid Brust jede Größe 
-Tailie 77 cm 
+Wasserfall Kleid
+ Brust jede Größe 
+Taille 77 cm 
 Hüfte 91cm 
 
 Viscose 70%
@@ -23,7 +22,7 @@ Polyester 30%
 
 Kleid Türkis
 76 cm Brust 
-68 cmTaille 
+68 cm Taille 
 88 cm Hüfte 
 Stoff ist dehnbar 
 
@@ -69,35 +68,35 @@ Alles mit Handwäsche waschen
                   <th className="py-2 px-4 text-left font-normal border-r">
                     Prudentos
                   </th>
-                  <th className="py-2 px-4 text-left font-normal">Age</th>
-                  <th className="py-2 px-4 text-left font-normal">Email</th>
+                  <th className="py-2 px-4 text-left font-normal">Bust</th>
+                  <th className="py-2 px-4 text-left font-normal">Waist</th>
+                  <th className="py-2 px-4 text-left font-normal">Hip</th>
                 </tr>
               </thead>
               <tbody className="opacity-50">
                 <tr>
                   <td className="py-2 text-left px-4 border-t border-r">
-                    Taille denim
+                    Philomena
                   </td>
-                  <td className="py-2 text-left px-4 border-t">25</td>
-                  <td className="py-2 text-left px-4 border-t">
-                    john@example.com
-                  </td>
+                  <td className="py-2 text-left px-4 border-t">Every size</td>
+                  <td className="py-2 text-left px-4 border-t">77 cm</td>
+                  <td className="py-2 text-left px-4 border-t">91 cm</td>
                 </tr>
                 <tr className="">
-                  <td className="py-2 text-left px-4 border-t border-r">UK</td>
-                  <td className="py-2 text-left px-4 border-t">30</td>
-                  <td className="py-2 text-left px-4 border-t">
-                    jane@example.com
+                  <td className="py-2 text-left px-4 border-t border-r">
+                    Celina Lace
                   </td>
+                  <td className="py-2 text-left px-4 border-t">76 cm</td>
+                  <td className="py-2 text-left px-4 border-t">68 cm</td>
+                  <td className="py-2 text-left px-4 border-t">88 cm</td>
                 </tr>
                 <tr>
                   <td className="py-2 text-left px-4 border-t border-r">
-                    Europe
+                    Atusa Two Piece
                   </td>
-                  <td className="py-2 text-left px-4 border-t">28</td>
-                  <td className="py-2 text-left px-4 border-t">
-                    michael@example.com
-                  </td>
+                  <td className="py-2 text-left px-4 border-t">Adjustable</td>
+                  <td className="py-2 text-left px-4 border-t">72 cm</td>
+                  <td className="py-2 text-left px-4 border-t">90 cm</td>
                 </tr>
               </tbody>
             </table>
