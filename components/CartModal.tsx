@@ -8,7 +8,6 @@ import {
 } from "@/utils/shopify";
 import { useEffect, useState } from "react";
 import useStore from "@/app/(store)/store";
-import Image from "next/image";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
 
 function extractColor(str: string) {
