@@ -9,14 +9,16 @@ export default function PrivacyPolicy() {
       <p className="mb-4">Last updated: 21. October 2024</p>
 
       <p className="mb-4">
-        This Privacy Policy describes how Samira Prudentos (the "Site", "we",
-        "us", or "our") collects, uses, and discloses your personal information
-        when you visit, use our services, or make a purchase from
-        www.samira-prudentos.com (the "Site") or otherwise communicate with us
-        (collectively, the "Services"). For purposes of this Privacy Policy,
-        "you" and "your" means you as the user of the Services, whether you are
-        a customer, website visitor, or another individual whose information we
-        have collected pursuant to this Privacy Policy.
+        This Privacy Policy describes how Samira Prudentos (the
+        &quot;Site&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;)
+        collects, uses, and discloses your personal information when you visit,
+        use our services, or make a purchase from www.samira-prudentos.com (the
+        &quot;Site&quot;) or otherwise communicate with us (collectively, the
+        &quot;Services&quot;). For purposes of this Privacy Policy,
+        &quot;you&quot; and &quot;your&quot; means you as the user of the
+        Services, whether you are a customer, website visitor, or another
+        individual whose information we have collected pursuant to this Privacy
+        Policy.
       </p>
 
       <p className="mb-4">
@@ -33,8 +35,8 @@ export default function PrivacyPolicy() {
         We may update this Privacy Policy from time to time, including to
         reflect changes to our practices or for other operational, legal, or
         regulatory reasons. We will post the revised Privacy Policy on the Site,
-        update the "Last updated" date and take any other steps required by
-        applicable law.
+        update the &quot;Last updated&quot; date and take any other steps
+        required by applicable law.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
@@ -53,10 +55,10 @@ export default function PrivacyPolicy() {
       <p className="mb-4">
         The types of personal information we obtain about you depends on how you
         interact with our Site and use our Services. When we use the term
-        "personal information", we are referring to information that identifies,
-        relates to, describes or can be associated with you. The following
-        sections describe the categories and specific types of personal
-        information we collect.
+        &quot;personal information&quot;, we are referring to information that
+        identifies, relates to, describes or can be associated with you. The
+        following sections describe the categories and specific types of
+        personal information we collect.
       </p>
 
       <h3 className="text-lg font-semibold mt-4 mb-2">
@@ -90,11 +92,12 @@ export default function PrivacyPolicy() {
       </h3>
       <p className="mb-4">
         We also automatically collect certain information about your interaction
-        with the Services ("Usage Data"). To do this, we may use cookies, pixels
-        and similar technologies ("Cookies"). Usage Data may include information
-        about how you access and use our Site and your account, including device
-        information, browser information, your IP address and other information
-        regarding your interaction with the Services.
+        with the Services (&quot;Usage Data&quot;). To do this, we may use
+        cookies, pixels and similar technologies (&quot;Cookies&quot;). Usage
+        Data may include information about how you access and use our Site and
+        your account, including device information, browser information, your IP
+        address and other information regarding your interaction with the
+        Services.
       </p>
 
       <h3 className="text-lg font-semibold mt-4 mb-2">
@@ -131,7 +134,7 @@ export default function PrivacyPolicy() {
         third parties for legitimate purposes subject to this Privacy Policy.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">Children's Data</h2>
+      <h2 className="text-xl font-semibold mt-6 mb-2">Children&apos;s Data</h2>
       <p className="mb-4">
         The Services are not intended to be used by children, and we do not
         knowingly collect any personal information about children.
@@ -142,7 +145,7 @@ export default function PrivacyPolicy() {
       </h2>
       <p className="mb-4">
         Please be aware that no security measures are perfect or impenetrable,
-        and we cannot guarantee "perfect security."
+        and we cannot guarantee &quot;perfect security.&quot;
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">
