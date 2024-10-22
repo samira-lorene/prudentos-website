@@ -56,7 +56,6 @@ export default function Product({ variantId, ...props }: ProductProps) {
   const [carouselWidth, setCarouselWidth] = useState<number | undefined>(0);
 
   useEffect(() => {
-
     // Assuming you have a way to get the carousel width
     const updateCarouselWidth = () => {
       const carouselWidth = (carouselRef.current as HTMLElement | null)
