@@ -66,6 +66,9 @@ export default function ProductPageContent(product: any, id: string) {
   const getCartItemQuantities = async () => {
     try {
       const cartId = sessionStorage.getItem("cartId") || "";
+      if (cartId === "") {
+        return;
+      }
       const cart = await retrieveCart(cartId);
 
       // Create an object to hold item quantities
@@ -89,7 +92,6 @@ export default function ProductPageContent(product: any, id: string) {
   const handleAddToCart = async () => {
     setLoading(true);
     if (selectedSize || addCartPressedSmallScreens) {
-
       // then open cart modal and show the item
       let cartId = sessionStorage.getItem("cartId") || "";
 
@@ -326,7 +328,7 @@ export default function ProductPageContent(product: any, id: string) {
               </button>
             ) : (
               <button className={`${styles.notAvailableButton}`}>
-                No Further items available.
+                No further items available.
               </button>
             )}
             <div className="pt-8">

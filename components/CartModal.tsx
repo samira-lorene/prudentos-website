@@ -104,7 +104,7 @@ export default function CartModal({
   // for some reason its completetly broken
   // i think its somehting to do with: setHeaderHeight() (from cart)
 
-  // TODO: make sure videos work on iPhone
+  // TODO: make sure videos (autoPlay of videos) work on iPhone
 
   // TODO: use dynamic height or inset-0 for the modals
   // and for the product page on mobile screeens
