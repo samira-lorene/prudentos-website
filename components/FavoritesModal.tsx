@@ -13,9 +13,6 @@ export default function FavoritesModal({
   const favorites = useStore((state: any) => state.favorites);
   const removeFavorite = useStore((state: any) => state.removeFavorite);
 
-  const numberOfCartItems = useStore((state: any) => state.numberOfCartItems)
-  const setNumberOfCartItems = useStore((state: any) => state.setNumberOfCartItems)
-
   const handleAddToCart = async (favoriteId: string) => {
     console.log("add to cart");
     console.log(favoriteId);
@@ -25,10 +22,8 @@ export default function FavoritesModal({
     if (cartId) {
       console.log("updating cart");
       await updateCart(cartId, favoriteId, 1);
-      setNumberOfCartItems(numberOfCartItems + 1)
     } else {
       let data = await addToCart(favoriteId, 1);
-      setNumberOfCartItems(numberOfCartItems + 1)
       cartId = data.cartCreate.cart.id;
       sessionStorage.setItem("cartId", cartId);
     }

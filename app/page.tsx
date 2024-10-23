@@ -5,16 +5,15 @@ import { getProducts } from "../utils/shopify";
 export default async function Home() {
   const shopifyProducts = await getProducts();
   const availableProducts = shopifyProducts.products.edges;
-  const variantId = availableProducts[0].node.variants.edges[0].node.id;
-  // console.log("products", availableProducts[0].variants.edges[0].node.id);
+  // const variantId = availableProducts[0].node.variants.edges[0].node.id;
 
   return (
     <main className="flex top-12 flex-col">
       <section className="overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
-          <FrontImage src={"/01-1.webm"} title='"Back to work"' />
+          <FrontImage src={"/BLAU.webm"} title='"Back to work"' />
           <div className="hidden sm:block">
-            <FrontImage src={"/03.webm"} title="Le Chiquito noeud" />
+            <FrontImage src={"/SCHWARZ.webm"} title="Le Chiquito noeud" />
           </div>
         </div>
       </section>
@@ -31,7 +30,7 @@ export default async function Home() {
       </section>
       <section className="overflow-hidden">
         <div className="sm:hidden block">
-          <FrontImage src={"/03.webm"} title="Le Chiquito noeud" />
+          <FrontImage src={"/SCHWARZ.webm"} title="Le Chiquito noeud" />
         </div>
       </section>
     </main>

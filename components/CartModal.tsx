@@ -37,19 +37,29 @@ export default function CartModal({
     (state: any) => state.openCartModalStatus
   );
 
-  const numberOfCartItems = useStore((state: any) => state.numberOfCartItems);
-  const setNumberOfCartItems = useStore(
-    (state: any) => state.setNumberOfCartItems
-  );
   const setOpenCartModal = useStore((state: any) => state.setOpenCartModal);
+
+  const [cartItemsQuantityDict, setCartItemsQuantityDict] = useState<{
+    [key: string]: number;
+  }>({});
 
   const fetchProduct = async () => {
     try {
       const cartId = sessionStorage.getItem("cartId") || "";
       const cart = await retrieveCart(cartId);
-      // console.log("cart:", cart);
       setCart(cart);
       setCartItems(cart.lines.edges);
+
+      // Create an object to hold item quantities
+      const items = cart.lines.edges.reduce(
+        (acc: { [key: string]: number }, edge: any) => {
+          const variantId = edge.node.merchandise.id; // Assuming merchandise.id is the variant/product ID
+          acc[variantId] = edge.node.quantity;
+          return acc;
+        },
+        {}
+      );
+      setCartItemsQuantityDict(items);
 
       const data = await getCheckoutUrl(cartId);
       const { checkoutUrl } = data.cart;
@@ -70,19 +80,26 @@ export default function CartModal({
   const handleUpdateQuantity = async (
     nodeId: string,
     newQuantity: number,
-    increase: boolean
+    useableId: string
   ) => {
     if (newQuantity < 1) return;
+
+    console.log("useableID: ", useableId);
+    console.log("items in cart: ", cartItemsQuantityDict);
+    console.log(
+      "items in cart for this product: ",
+      cartItemsQuantityDict[useableId]
+    );
+    console.log(nodeId);
+
+    // TODO: if cartItems has reached maximum availableProducts -> return and show
+    // red text: "No further items available."
+
     setLoading(true);
     let cartId = sessionStorage.getItem("cartId") || "";
     console.log("cartId", cartId);
     if (cartId) {
       await updateCartItemQuantity(cartId, nodeId, newQuantity);
-      if (increase) {
-        setNumberOfCartItems(numberOfCartItems + 1);
-      } else {
-        setNumberOfCartItems(numberOfCartItems - 1);
-      }
     }
     fetchProduct();
     setLoading(false);
@@ -92,17 +109,27 @@ export default function CartModal({
     let cartId = sessionStorage.getItem("cartId") || "";
     if (cartId) {
       await removeCartItem(cartId, nodeId);
-      setNumberOfCartItems(numberOfCartItems - 1);
     }
     fetchProduct();
   };
 
   const handleCheckout = () => {
-    setNumberOfCartItems(0);
     setOpenCartModal();
     window.open(checkoutUrl, "_blank");
     window.location.replace("/");
   };
+
+  // TODO: fix height of modals on mobile screens
+  // for some reason its completetly broken
+  // i think its somehting to do with: setHeaderHeight() (from cart)
+
+  // TODO: get availableproducts and add red text to show that maximum item have been added IF
+  // IF maximum available products have been added, so if quantityAvailable === itemsInCart
+
+  // TODO: make sure videos work on iPhone
+
+  // TODO: use dynamic height or inset-0 for the modals
+  // and for the product page on mobile screeens
 
   return (
     <div
@@ -177,7 +204,7 @@ export default function CartModal({
                             handleUpdateQuantity(
                               item.node.id,
                               item.node.quantity - 1,
-                              false
+                              item.node.merchandise.id
                             )
                           }
                         >
@@ -198,7 +225,7 @@ export default function CartModal({
                             handleUpdateQuantity(
                               item.node.id,
                               item.node.quantity + 1,
-                              true
+                              item.node.merchandise.id
                             )
                           }
                         >

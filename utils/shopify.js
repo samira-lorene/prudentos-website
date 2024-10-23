@@ -11,7 +11,6 @@ const graphQLClient = new GraphQLClient(endpoint, {
 });
 
 export async function getProducts() {
-
   const getAllProductsQuery = gql`
     {
       products(first: 10) {
@@ -107,6 +106,8 @@ export const getProduct = async (id) => {
           edges {
             node {
               id
+              availableForSale
+              quantityAvailable
             }
           }
         }

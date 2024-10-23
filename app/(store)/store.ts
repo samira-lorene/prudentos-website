@@ -11,6 +11,11 @@ const useStore = create(
         set({ headerHeight: newHeight });
       },
 
+      temporaryCartNum: 0,
+      setTemporaryCartNum: (newNum: number) => {
+        set({ temporaryCartNum: newNum });
+      },
+
       openCartModalStatus: false,
       setOpenCartModal: () => {
         set((state: { openCartModalStatus: boolean }) => {
@@ -20,13 +25,6 @@ const useStore = create(
           };
         });
       },
-
-      numberOfCartItems: 0,
-      setNumberOfCartItems: (newNumberCartItems: number) => {
-        set({ numberOfCartItems: newNumberCartItems });
-      },
-
-
       favorites: [],
       addFavorite: (params: any) => {
         const { newItem } = params;

@@ -6,12 +6,13 @@ import { PiHeartThin, PiHeartFill } from "react-icons/pi";
 import FavoritesModal from "./FavoritesModal";
 import CartModal from "./CartModal";
 import useStore from "@/app/(store)/store";
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from "react-responsive";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Menu from "./Menu";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
 import { Staatliches } from "next/font/google";
+import { retrieveCart } from "@/utils/shopify";
 
 const staatliches = Staatliches({
   weight: "400",
@@ -24,15 +25,15 @@ export default function Header() {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const numberOfCartItems = useStore((state: any) => state.numberOfCartItems);
+  // const numberOfCartItems = useStore((state: any) => state.numberOfCartItems);
   const favorites = useStore((state: any) => state.favorites);
+  const temporaryCartNum = useStore((state: any) => state.temporaryCartNum);
 
   const openCartModalStatus = useStore(
     (state: any) => state.openCartModalStatus
   );
 
-  const isLargeDevice = useMediaQuery({ query: '(min-width: 768px)' })
-
+  const isLargeDevice = useMediaQuery({ query: "(min-width: 768px)" });
 
   // menu for mobile screens
   const [openMenu, setOpenMenu] = useState(false);
@@ -48,8 +49,57 @@ export default function Header() {
     (state: any) => state.setOpenFavoritesModal
   );
 
+  // const [numberOfCartItems, setNumberOfCartItems] = useState(0);
+  // const getNumberCartItems = async () => {
+  //   try {
+  //     const cartId = sessionStorage.getItem("cartId") || "";
+  //     if (cartId.length > 0) {
+  //       const cart = await retrieveCart(cartId);
+
+  //       // Calculate total quantity
+  //       const totalItems = cart.lines.edges.reduce((sum: number, edge: any) => {
+  //         return sum + edge.node.quantity;
+  //       }, 0);
+
+  //       setNumberOfCartItems(totalItems);
+  //     }
+  //   } catch (err: any) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
+  const getNumberCartItems = async () => {
+    try {
+      const cartId = sessionStorage.getItem("cartId") || "";
+      if (cartId.length > 0) {
+        const cart = await retrieveCart(cartId);
+
+        // Create an object to hold item quantities
+        const items = cart.lines.edges.reduce(
+          (acc: { [key: string]: number }, edge: any) => {
+            const variantId = edge.node.merchandise.id; // Assuming merchandise.id is the variant/product ID
+            acc[variantId] = edge.node.quantity;
+            return acc;
+          },
+          {}
+        );
+
+        setCartItems(items);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const totalCartItems = Object.values(cartItems).reduce(
+    (total, qty) => total + qty,
+    0
+  );
+
   // to prevent body from scrolling when modal is open
   useEffect(() => {
+    getNumberCartItems();
     if (openCartModalStatus || openFavoritesModalStatus || openMenu) {
       document.body.style.overflow = "hidden";
     } else {
@@ -60,7 +110,12 @@ export default function Header() {
       const height = headerRef?.current?.offsetHeight;
       setHeaderHeight(height);
     }
-  }, [openCartModalStatus, openFavoritesModalStatus, openMenu]);
+  }, [
+    openCartModalStatus,
+    openFavoritesModalStatus,
+    openMenu,
+    temporaryCartNum,
+  ]);
 
   // Hide Navigation on Page Scroll Functionality
   const [hidden, setHidden] = useState(false);
@@ -171,7 +226,7 @@ export default function Header() {
                   style={{ fontSize: "0.6rem" }}
                   className="text-xs font-thin"
                 >
-                  {numberOfCartItems > 0 ? numberOfCartItems : ""}
+                  {totalCartItems > 0 ? totalCartItems : ""}
                 </span>
               </p>
             </div>
@@ -256,10 +311,13 @@ export default function Header() {
               Cart
             </button>
             <button
-              onClick={setOpenCartModal}
+              onClick={() => {
+                setIsHovered(false);
+                setOpenCartModal();
+              }}
               className="relative grid place-items-center cursor-pointer"
             >
-              {numberOfCartItems > 0 ? (
+              {totalCartItems > 0 ? (
                 <div
                   style={{
                     backgroundColor: onAboutOrContactPage ? "white" : "black",
@@ -272,7 +330,7 @@ export default function Header() {
                       style={{ fontSize: "0.6rem" }}
                       className="text-xs font-thin"
                     >
-                      {numberOfCartItems > 0 ? numberOfCartItems : ""}
+                      {totalCartItems > 0 ? totalCartItems : ""}
                     </span>
                   </p>
                 </div>

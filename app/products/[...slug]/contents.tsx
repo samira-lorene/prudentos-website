@@ -37,9 +37,9 @@ export default function ProductPageContent(product: any, id: string) {
   const addFavorite = useStore((state: any) => state.addFavorite);
   const removeFavorite = useStore((state: any) => state.removeFavorite);
   const favorites = useStore((state: any) => state.favorites);
-
-  const numberOfCartItems = useStore((state: any) => state.numberOfCartItems)
-  const setNumberOfCartItems = useStore((state: any) => state.setNumberOfCartItems)
+  const setTemporaryCartNum = useStore(
+    (state: any) => state.setTemporaryCartNum
+  );
 
   const [openSizeGuide, setOpenSizeGuide] = useState(false);
 
@@ -56,9 +56,8 @@ export default function ProductPageContent(product: any, id: string) {
     product.product.descriptionHtml
   );
 
-  // TODO: fix the spacing of text when the screen is vertically restricted, but still technicall
-  // a large screen
-  // TODO: fix aspect ratio of images on small to medium size screens
+  // TODO: fix height of modals on mobile screens
+  // for some reason its completetly broken
 
   const handleAddToCart = async () => {
     setLoading(true);
@@ -72,7 +71,6 @@ export default function ProductPageContent(product: any, id: string) {
       if (cartId) {
         console.log("updating cart");
         await updateCart(cartId, product.product.variants.edges[0].node.id, 1);
-        setNumberOfCartItems(numberOfCartItems + 1)
         setSelectedSize(false);
       } else {
         let data = await addToCart(
@@ -81,11 +79,12 @@ export default function ProductPageContent(product: any, id: string) {
         );
         cartId = data.cartCreate.cart.id;
         sessionStorage.setItem("cartId", cartId);
-        setNumberOfCartItems(numberOfCartItems + 1)
         setSelectedSize(false);
       }
       if (!addCartPressedSmallScreens) {
         setOpenCartModal();
+      } else {
+        setTemporaryCartNum(Math.floor(Math.random() * 1000) + 1);
       }
       setLoading(false);
       setAddCartPressedSmallScreens(false);
@@ -96,13 +95,13 @@ export default function ProductPageContent(product: any, id: string) {
   let match = str.match(/Color:\s*([a-zA-Z0-9-]+)/);
   let color = match ? match[1].trim() : null;
   let colorForHexCode = color.replace(/-/g, "").toLowerCase();
-  // console.log(colorForHexCode); // Output: deep-navy
   color = color.replace(/-/g, " ");
-  // console.log(color);
 
   let hexCode = colornames(colorForHexCode);
   if (colorForHexCode === "darknavy") {
     hexCode = "#0f0330";
+  } else if (colorForHexCode === "turquoise") {
+    hexCode = "#469BCC";
   }
 
   function handleFavoriteClick(productId: string) {
@@ -129,6 +128,8 @@ export default function ProductPageContent(product: any, id: string) {
 
   useEffect(() => {
     if (addCartPressedSmallScreens) {
+      // TODO: if prodcut is available still (terms of quantity)
+      // then call handleAddToCart()
       handleAddToCart();
     }
   }, [addCartPressedSmallScreens]);
@@ -148,13 +149,21 @@ export default function ProductPageContent(product: any, id: string) {
     });
   });
 
+  // TODO: cross reference quantityAvailable with items in cart
+  // so make it qunatityAvailable OR maximumItemsInCart
+
+  // const quantityAvailable =
+  //   product.product.variants.edges[0].node.quantityAvailable;
+  const quantityAvailable = 0;
+  const availableForSale =
+    product.product.variants.edges[0].node.availableForSale;
+  console.log("wauntity: ", quantityAvailable);
+  console.log("availbale: ", availableForSale);
+
   return (
     <>
       <div ref={pageRef} className="flex top-0 flex-col md:flex-row">
-        <SizeGuide
-          openModal={openSizeGuide}
-          closeModal={setOpenSizeGuide}
-        />
+        <SizeGuide openModal={openSizeGuide} closeModal={setOpenSizeGuide} />
         {/* Backdrop */}
         {openSizeGuide && (
           <div
@@ -212,7 +221,11 @@ export default function ProductPageContent(product: any, id: string) {
                 className={`${
                   selectedSize ? "selectedSize" : "headerLink"
                 } cursor-pointer tracking-wide selectedSize`}
-                onClick={() => setSelectedSize(!selectedSize)}
+                onClick={() => {
+                  if (quantityAvailable > 0) {
+                    setSelectedSize(!selectedSize);
+                  }
+                }}
               >
                 One Size
               </span>
@@ -237,49 +250,57 @@ export default function ProductPageContent(product: any, id: string) {
                 <PiHeartThin />
               )}
             </div>
-            <button
-              className={`${styles.parentButton} ${
-                selectedSize && styles.addToCartStyles
-              }`}
-              onClick={() => handleAddToCart()}
-            >
-              <div
-                className={`${!selectedSize && styles.blackElement}`}
-                style={{
-                  letterSpacing: "0.1em",
-                  display: "flex",
-                  left: "0",
-                  right: "0",
-                  justifyContent: "space-between",
-                  width: "100%",
-                  alignItems: "center",
-                }}
+            {quantityAvailable > 0 ? (
+              <button
+                className={`${styles.parentButton} ${
+                  selectedSize && styles.addToCartStyles
+                }`}
+                onClick={() => handleAddToCart()}
               >
-                <div className="flex text-xs items-center uppercase">
-                  <AddToCart color={selectedSize ? "#fff" : "#000"} />
-                  <span className="ml-2">Add</span>
-                </div>
-                <div>
-                  {parseInt(product.product.priceRange.minVariantPrice.amount)}{" "}
-                  EUR
-                </div>
-              </div>
-              {!selectedSize && (
                 <div
+                  className={`${!selectedSize && styles.blackElement}`}
                   style={{
                     letterSpacing: "0.1em",
-                    position: "absolute",
-                    textTransform: "uppercase",
                     display: "flex",
-                    justifyContent: "center",
+                    left: "0",
+                    right: "0",
+                    justifyContent: "space-between",
                     width: "100%",
+                    alignItems: "center",
                   }}
-                  className={`${styles.whiteElement}`}
                 >
-                  Choose a size
+                  <div className="flex text-xs items-center uppercase">
+                    <AddToCart color={selectedSize ? "#fff" : "#000"} />
+                    <span className="ml-2">Add</span>
+                  </div>
+                  <div>
+                    {parseInt(
+                      product.product.priceRange.minVariantPrice.amount
+                    )}{" "}
+                    EUR
+                  </div>
                 </div>
-              )}
-            </button>
+                {!selectedSize && (
+                  <div
+                    style={{
+                      letterSpacing: "0.1em",
+                      position: "absolute",
+                      textTransform: "uppercase",
+                      display: "flex",
+                      justifyContent: "center",
+                      width: "100%",
+                    }}
+                    className={`${styles.whiteElement}`}
+                  >
+                    Choose a size
+                  </div>
+                )}
+              </button>
+            ) : (
+              <button className={`${styles.notAvailableButton}`}>
+                SOLD OUT
+              </button>
+            )}
             <div className="pt-8">
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
@@ -339,23 +360,34 @@ export default function ProductPageContent(product: any, id: string) {
               {parseInt(product.product.priceRange.minVariantPrice.amount)} EUR
             </span>
           </div>
-          <button
-            onClick={() => {
-              setAddCartPressedSmallScreens(true);
-            }}
-            className={`mb-3 cursor-pointer border-black border w-full
+          {quantityAvailable > 0 ? (
+            <button
+              onClick={() => {
+                setAddCartPressedSmallScreens(true);
+              }}
+              className={`mb-3 cursor-pointer border-black border w-full
              h-fit flex justify-center bg-black text-xs px-3 py-4 text-white relative`}
-          >
-            <span className="text-xs tracking-widest items-center uppercase">
-              {loading ? (
-                <div>
-                  <LoadingSpinner />
-                </div>
-              ) : (
-                <span>Add</span>
-              )}
-            </span>
-          </button>
+            >
+              <span className="text-xs tracking-widest items-center uppercase">
+                {loading ? (
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <span>Add</span>
+                )}
+              </span>
+            </button>
+          ) : (
+            <div
+              className={`mb-3 cursor-default border-black border w-full
+             h-fit flex justify-center bg-black text-xs px-3 py-4 text-white relative`}
+            >
+              <span className="text-xs tracking-widest items-center uppercase">
+                <span>Sold Out</span>
+              </span>
+            </div>
+          )}
         </section>
       </div>
     </>
