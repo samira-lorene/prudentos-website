@@ -151,8 +151,7 @@ export default function ProductPageContent(product: any, id: string) {
   }
 
   const quantityInCart =
-    cartItemsQuantityDict[product.product.variants.edges[0].node.id];
-  // console.log("Quantity in cart: ", quantityInCart);
+    cartItemsQuantityDict[product.product.variants.edges[0].node.id] || 0;
 
   const quantityOfProductAvailable =
     product.product.variants.edges[0].node.quantityAvailable;
