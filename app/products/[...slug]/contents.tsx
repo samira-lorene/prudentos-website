@@ -9,7 +9,7 @@ import AddToCart from "@/components/AddToCart";
 import Product from "@/components/Product";
 import { PiHeartThin, PiHeartFill } from "react-icons/pi";
 import useStore from "../../(store)/store";
-import { addToCart, updateCart } from "@/utils/shopify";
+import { addToCart, retrieveCart, updateCart } from "@/utils/shopify";
 import {
   Accordion,
   AccordionContent,
@@ -31,6 +31,9 @@ export default function ProductPageContent(product: any, id: string) {
   const [selectedSize, setSelectedSize] = useState(false);
   const [addCartPressedSmallScreens, setAddCartPressedSmallScreens] =
     useState(false);
+  const openCartModalStatus = useStore(
+    (state: any) => state.openCartModalStatus
+  );
   const setOpenCartModal = useStore((state: any) => state.setOpenCartModal);
   const [loading, setLoading] = useState(false);
 
@@ -40,6 +43,10 @@ export default function ProductPageContent(product: any, id: string) {
   const setTemporaryCartNum = useStore(
     (state: any) => state.setTemporaryCartNum
   );
+
+  const [cartItemsQuantityDict, setCartItemsQuantityDict] = useState<{
+    [key: string]: number;
+  }>({});
 
   const [openSizeGuide, setOpenSizeGuide] = useState(false);
 
@@ -56,24 +63,37 @@ export default function ProductPageContent(product: any, id: string) {
     product.product.descriptionHtml
   );
 
+  const getCartItemQuantities = async () => {
+    try {
+      const cartId = sessionStorage.getItem("cartId") || "";
+      const cart = await retrieveCart(cartId);
+
+      // Create an object to hold item quantities
+      const items = cart.lines.edges.reduce(
+        (acc: { [key: string]: number }, edge: any) => {
+          const variantId = edge.node.merchandise.id; // Assuming merchandise.id is the variant/product ID
+          acc[variantId] = edge.node.quantity;
+          return acc;
+        },
+        {}
+      );
+      setCartItemsQuantityDict(items);
+    } catch (err: any) {
+      console.log("error getting cart items in product page: ", err.message);
+    }
+  };
+
   // TODO: fix height of modals on mobile screens
   // for some reason its completetly broken
 
   const handleAddToCart = async () => {
     setLoading(true);
     if (selectedSize || addCartPressedSmallScreens) {
-      console.log("add to cart");
 
       // then open cart modal and show the item
       let cartId = sessionStorage.getItem("cartId") || "";
-      console.log("cartId", cartId);
-      console.log("id added to cart: ", product.product.variants.edges[0].node.id);
+
       if (cartId) {
-        console.log("updating cart");
-        console.log(
-          "id thats passed to cart: ",
-          product.product.variants.edges[0].node.id
-        );
         await updateCart(cartId, product.product.variants.edges[0].node.id, 1);
         setSelectedSize(false);
       } else {
@@ -130,13 +150,29 @@ export default function ProductPageContent(product: any, id: string) {
     }
   }
 
+  const quantityInCart =
+    cartItemsQuantityDict[product.product.variants.edges[0].node.id];
+  // console.log("Quantity in cart: ", quantityInCart);
+
+  const quantityOfProductAvailable =
+    product.product.variants.edges[0].node.quantityAvailable;
+
+  const quantityAvailable =
+    quantityOfProductAvailable > 0 &&
+    product.product.variants.edges[0].node.quantityAvailable > quantityInCart;
+
+  const availableForSale =
+    product.product.variants.edges[0].node.availableForSale;
+  // console.log("availbale: ", availableForSale);
+
   useEffect(() => {
     if (addCartPressedSmallScreens) {
-      // TODO: if prodcut is available still (in terms of quantity)
-      // then call handleAddToCart()
-      handleAddToCart();
+      if (quantityAvailable && availableForSale) {
+        handleAddToCart();
+      }
     }
-  }, [addCartPressedSmallScreens]);
+    getCartItemQuantities();
+  }, [addCartPressedSmallScreens, openCartModalStatus]);
 
   useGSAP(() => {
     let mm = gsap.matchMedia();
@@ -152,17 +188,6 @@ export default function ProductPageContent(product: any, id: string) {
       });
     });
   });
-
-  // TODO: cross reference quantityAvailable with items in cart
-  // so make it qunatityAvailable OR maximumItemsInCart
-
-  const quantityAvailable =
-    product.product.variants.edges[0].node.quantityAvailable;
-  // const quantityAvailable = 0;
-  const availableForSale =
-    product.product.variants.edges[0].node.availableForSale;
-  console.log("wauntity: ", quantityAvailable);
-  console.log("availbale: ", availableForSale);
 
   return (
     <>
@@ -226,7 +251,7 @@ export default function ProductPageContent(product: any, id: string) {
                   selectedSize ? "selectedSize" : "headerLink"
                 } cursor-pointer tracking-wide selectedSize`}
                 onClick={() => {
-                  if (quantityAvailable > 0) {
+                  if (quantityAvailable && availableForSale) {
                     setSelectedSize(!selectedSize);
                   }
                 }}
@@ -254,7 +279,7 @@ export default function ProductPageContent(product: any, id: string) {
                 <PiHeartThin />
               )}
             </div>
-            {quantityAvailable > 0 ? (
+            {quantityAvailable && availableForSale ? (
               <button
                 className={`${styles.parentButton} ${
                   selectedSize && styles.addToCartStyles
@@ -302,7 +327,7 @@ export default function ProductPageContent(product: any, id: string) {
               </button>
             ) : (
               <button className={`${styles.notAvailableButton}`}>
-                SOLD OUT
+                No Further items available.
               </button>
             )}
             <div className="pt-8">
@@ -364,7 +389,7 @@ export default function ProductPageContent(product: any, id: string) {
               {parseInt(product.product.priceRange.minVariantPrice.amount)} EUR
             </span>
           </div>
-          {quantityAvailable > 0 ? (
+          {quantityAvailable && availableForSale ? (
             <button
               onClick={() => {
                 setAddCartPressedSmallScreens(true);
@@ -387,8 +412,8 @@ export default function ProductPageContent(product: any, id: string) {
               className={`mb-3 cursor-default border-black border w-full
              h-fit flex justify-center bg-black text-xs px-3 py-4 text-white relative`}
             >
-              <span className="text-xs tracking-widest items-center uppercase">
-                <span>Sold Out</span>
+              <span className="text-xs tracking-widest items-center">
+                <span>No further items available.</span>
               </span>
             </div>
           )}

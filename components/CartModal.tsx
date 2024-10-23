@@ -5,12 +5,10 @@ import {
   getCheckoutUrl,
   updateCartItemQuantity,
   removeCartItem,
-  getQuantity,
 } from "@/utils/shopify";
 import { useEffect, useState } from "react";
 import useStore from "@/app/(store)/store";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
-import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 
 function extractColor(str: string) {
@@ -42,27 +40,12 @@ export default function CartModal({
 
   const setOpenCartModal = useStore((state: any) => state.setOpenCartModal);
 
-  const [cartItemsQuantityDict, setCartItemsQuantityDict] = useState<{
-    [key: string]: number;
-  }>({});
-
   const fetchProduct = async () => {
     try {
       const cartId = sessionStorage.getItem("cartId") || "";
       const cart = await retrieveCart(cartId);
       setCart(cart);
       setCartItems(cart.lines.edges);
-
-      // Create an object to hold item quantities
-      const items = cart.lines.edges.reduce(
-        (acc: { [key: string]: number }, edge: any) => {
-          const variantId = edge.node.merchandise.id; // Assuming merchandise.id is the variant/product ID
-          acc[variantId] = edge.node.quantity;
-          return acc;
-        },
-        {}
-      );
-      setCartItemsQuantityDict(items);
 
       const data = await getCheckoutUrl(cartId);
       const { checkoutUrl } = data.cart;
@@ -93,11 +76,6 @@ export default function CartModal({
       return;
     }
 
-    console.log(
-      "items in cart for this product: ",
-      cartItemsQuantityDict[useableId]
-    );
-
     setLoading(true);
     let cartId = sessionStorage.getItem("cartId") || "";
     console.log("cartId", cartId);
@@ -125,9 +103,6 @@ export default function CartModal({
   // TODO: fix height of modals on mobile screens
   // for some reason its completetly broken
   // i think its somehting to do with: setHeaderHeight() (from cart)
-
-  // TODO: get availableproducts and add red text to show that maximum item have been added IF
-  // IF maximum available products have been added, so if quantityAvailable === itemsInCart
 
   // TODO: make sure videos work on iPhone
 

@@ -139,34 +139,6 @@ export const getProduct = async (id) => {
   }
 };
 
-export const getQuantity = async (id) => {
-  const variantsQuery = gql`
-    query getProduct($id: ID!) {
-      product(id: $id) {
-        variants(first: 10) {
-          edges {
-            node {
-              id
-              availableForSale
-              quantityAvailable
-            }
-          }
-        }
-      }
-    }
-  `;
-  const variables = {
-    id,
-  };
-  try {
-    const data = await graphQLClient.request(variantsQuery, variables);
-    return data.product.variants.edges;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-
 export async function addToCart(itemId, quantity) {
   const createCartMutation = gql`
     mutation createCart($cartInput: CartInput) {
