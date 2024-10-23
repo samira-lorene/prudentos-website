@@ -67,9 +67,13 @@ export default function ProductPageContent(product: any, id: string) {
       // then open cart modal and show the item
       let cartId = sessionStorage.getItem("cartId") || "";
       console.log("cartId", cartId);
-      console.log(product.product.variants.edges[0].node.id);
+      console.log("id added to cart: ", product.product.variants.edges[0].node.id);
       if (cartId) {
         console.log("updating cart");
+        console.log(
+          "id thats passed to cart: ",
+          product.product.variants.edges[0].node.id
+        );
         await updateCart(cartId, product.product.variants.edges[0].node.id, 1);
         setSelectedSize(false);
       } else {
@@ -128,7 +132,7 @@ export default function ProductPageContent(product: any, id: string) {
 
   useEffect(() => {
     if (addCartPressedSmallScreens) {
-      // TODO: if prodcut is available still (terms of quantity)
+      // TODO: if prodcut is available still (in terms of quantity)
       // then call handleAddToCart()
       handleAddToCart();
     }
@@ -152,9 +156,9 @@ export default function ProductPageContent(product: any, id: string) {
   // TODO: cross reference quantityAvailable with items in cart
   // so make it qunatityAvailable OR maximumItemsInCart
 
-  // const quantityAvailable =
-  //   product.product.variants.edges[0].node.quantityAvailable;
-  const quantityAvailable = 0;
+  const quantityAvailable =
+    product.product.variants.edges[0].node.quantityAvailable;
+  // const quantityAvailable = 0;
   const availableForSale =
     product.product.variants.edges[0].node.availableForSale;
   console.log("wauntity: ", quantityAvailable);

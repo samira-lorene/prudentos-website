@@ -5,10 +5,13 @@ import {
   getCheckoutUrl,
   updateCartItemQuantity,
   removeCartItem,
+  getQuantity,
 } from "@/utils/shopify";
 import { useEffect, useState } from "react";
 import useStore from "@/app/(store)/store";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
+import { usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 function extractColor(str: string) {
   let match = str.match(/Color:\s*([a-zA-Z0-9-]+)/);
@@ -80,20 +83,20 @@ export default function CartModal({
   const handleUpdateQuantity = async (
     nodeId: string,
     newQuantity: number,
-    useableId: string
+    useableId: string,
+    availableItems: number
   ) => {
     if (newQuantity < 1) return;
 
-    console.log("useableID: ", useableId);
-    console.log("items in cart: ", cartItemsQuantityDict);
+    if (newQuantity > availableItems) {
+      toast.warning("Sorry, no further items are available.");
+      return;
+    }
+
     console.log(
       "items in cart for this product: ",
       cartItemsQuantityDict[useableId]
     );
-    console.log(nodeId);
-
-    // TODO: if cartItems has reached maximum availableProducts -> return and show
-    // red text: "No further items available."
 
     setLoading(true);
     let cartId = sessionStorage.getItem("cartId") || "";
@@ -204,7 +207,8 @@ export default function CartModal({
                             handleUpdateQuantity(
                               item.node.id,
                               item.node.quantity - 1,
-                              item.node.merchandise.id
+                              item.node.merchandise.id,
+                              item.node.merchandise.quantityAvailable
                             )
                           }
                         >
@@ -225,9 +229,18 @@ export default function CartModal({
                             handleUpdateQuantity(
                               item.node.id,
                               item.node.quantity + 1,
-                              item.node.merchandise.id
+                              item.node.merchandise.id,
+                              item.node.merchandise.quantityAvailable
                             )
                           }
+                          // disabled={
+                          //   item.node.quantity + 1 >
+                          //   item.node.merchandise.quantityAvailable
+                          // }
+                          // className={`${
+                          //   item.node.quantity + 1 >
+                          //   item.node.merchandise.quantityAvailable && "opacity-0"
+                          // }`}
                         >
                           +
                         </button>
