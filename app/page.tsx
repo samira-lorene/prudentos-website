@@ -8,21 +8,24 @@ export default async function Home() {
   const availableProducts = shopifyProducts.products.edges;
   // const variantId = availableProducts[0].node.variants.edges[0].node.id;
 
+  // TODO: fix cart after checkout
+  // TODO: and make sure that it says: "No more items available" if 0 are actually in stock of an item.
+
   return (
     <main className="flex top-12 flex-col">
       <PreLoad />
       <section className="overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
           <FrontImage
-            src={"/BLAU.webm"}
-            title='"Back to work"'
+            src={"/GRÜN.webm"}
+            title="Enfant Sauvage"
             posterSrc="/temp_poster_blau.png"
           />
           <div className="hidden sm:block">
             <FrontImage
               src={"/SCHWARZ.webm"}
               posterSrc="/temp_poster_schwarz.png"
-              title="Le Chiquito noeud"
+              title="Ma vie"
             />
           </div>
         </div>
@@ -41,10 +44,26 @@ export default async function Home() {
       <section className="overflow-hidden">
         <div className="sm:hidden block">
           <FrontImage
-            src={"/SCHWARZ.webm"}
+            src={"/TÜRKIS.webm"}
             posterSrc="/temp_poster_schwarz.png"
-            title="Le Chiquito noeud"
+            title="En voyage"
           />
+        </div>
+      </section>
+      <section className="overflow-hidden hidden sm:block">
+        <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
+          <FrontImage
+            src={"/TÜRKIS.webm"}
+            title="En voyage"
+            posterSrc="/temp_poster_blau.png"
+          />
+          <div className="hidden sm:block">
+            <FrontImage
+              src={"/BLAU.webm"}
+              posterSrc="/temp_poster_schwarz.png"
+              title="Amour"
+            />
+          </div>
         </div>
       </section>
     </main>
