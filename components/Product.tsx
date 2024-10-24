@@ -135,9 +135,9 @@ export default function Product({ variantId, ...props }: ProductProps) {
                   alt={media.node.image.altText ?? "alt text"}
                 />
                 {/* <DynamicBlur
-                src={media.node.image.url}
-                alt={media.node.image.altText ?? "alt text"}
-              /> */}
+                  src={media.node.image.url}
+                  alt={media.node.image.altText ?? "alt text"}
+                /> */}
               </div>
             </CarouselItem>
           ))}

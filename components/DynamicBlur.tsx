@@ -19,24 +19,15 @@ export default async function DynamicBlur({ src, alt }: DynamicBlurProps) {
   });
 
   return (
-    <div
-      // make sure pathname.includes() works for all product pages
-      style={{ aspectRatio: "9/12" }}
-      // add this:
-      // ${pathname.includes("/product") ? "h-[83vh]" : ""}
-
-      className={`relative w-full flex 
-         flex-col transition-opacity duration-200`}
-    >
+    <>
       <Image
-        className="object-cover"
+        className="object-cover object-top"
         fill
         placeholder="blur"
         blurDataURL={`data:image/png;base64,${imageBlur}`}
-        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
         src={src}
         alt={alt}
       />
-    </div>
+    </>
   );
 }

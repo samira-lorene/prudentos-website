@@ -1,22 +1,36 @@
 import React from "react";
 import Image from "next/image";
+import fs from "node:fs/promises";
+import { getPlaiceholder } from "plaiceholder";
 
-export default function About() {
+export default async function About() {
+
+  const horizontalSrc = "/about_horizontal.webp";
+  const horizontalBuffer = await fs.readFile(`./public${horizontalSrc}`);
+  const { base64: horizontalBase64 } = await getPlaiceholder(horizontalBuffer);
+
+  const verticalSrc = "/about_vertical.webp";
+  const verticalBuffer = await fs.readFile(`./public${verticalSrc}`);
+  const { base64: verticalBase64 } = await getPlaiceholder(verticalBuffer);
+
 
   return (
     <div className="h-fit w-fit">
       <div className="z-40 fixed inset-0 bg-black opacity-50"></div>
-
       <Image
-        src="/about_vertical.webp"
-        alt="about image"
+        src={verticalSrc.replace("./public", "")}
         fill
+        alt="abouzt image"
+        placeholder="blur"
+        blurDataURL={verticalBase64}
         className="object-cover md:hidden"
       />
       <Image
-        src="/about_horizontal.webp"
-        alt="hero"
+        src={horizontalSrc.replace("./public", "")}
         fill
+        alt="abouzt image"
+        placeholder="blur"
+        blurDataURL={horizontalBase64}
         className="object-cover hidden md:block"
       />
       <div className="fixed z-50 inset-0 flex flex-col justify-center items-center">

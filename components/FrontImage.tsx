@@ -7,8 +7,7 @@ export default function GalleryCell({
   title: string;
   posterSrc: string;
 }) {
-  // TODO: convert all static images to webp format
-  // TODO: add plaiceholder for lazy loading images
+  // TODO: convert posters for Front Videos to webp format
 
   return (
     <div>
