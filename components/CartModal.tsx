@@ -111,10 +111,10 @@ export default function CartModal({
 
   return (
     <div
-      className={`fixed top-0 flex flex-col px-10 py-6 right-0 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
+      className={`fixed right-0 flex flex-col px-10 py-6 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
         openModal ? "translate-x-0" : "translate-x-full"
       }`}
-      style={{ zIndex: openModal ? 1000 : 50 }} // Increase z-index when sidebar is open
+      style={{ zIndex: 1000 }} 
     >
       <div className="flex items-center justify-between py-2">
         <h1 className="font-light text-xs normal-case">Cart</h1>

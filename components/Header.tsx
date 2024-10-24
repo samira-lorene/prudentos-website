@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import FlipLink from "./FlipLink";
 import { PiHeartThin, PiHeartFill } from "react-icons/pi";
 import FavoritesModal from "./FavoritesModal";
 import CartModal from "./CartModal";
@@ -48,25 +47,6 @@ export default function Header() {
   const setOpenFavoritesModal = useStore(
     (state: any) => state.setOpenFavoritesModal
   );
-
-  // const [numberOfCartItems, setNumberOfCartItems] = useState(0);
-  // const getNumberCartItems = async () => {
-  //   try {
-  //     const cartId = sessionStorage.getItem("cartId") || "";
-  //     if (cartId.length > 0) {
-  //       const cart = await retrieveCart(cartId);
-
-  //       // Calculate total quantity
-  //       const totalItems = cart.lines.edges.reduce((sum: number, edge: any) => {
-  //         return sum + edge.node.quantity;
-  //       }, 0);
-
-  //       setNumberOfCartItems(totalItems);
-  //     }
-  //   } catch (err: any) {
-  //     console.log(err);
-  //   }
-  // };
 
   const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
   const getNumberCartItems = async () => {
@@ -132,17 +112,18 @@ export default function Header() {
 
   return (
     <motion.div
-      style={{ zIndex: 1000 }}
+      style={{ zIndex: 999 }}
       variants={{
         visible: { y: 0 }, // y is yTranslate in css
         hidden: { y: "-100%" },
       }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      animate={!isLargeDevice && (hidden ? "hidden" : "visible")}
+      animate={!isLargeDevice && (hidden ? "hidden" : "visible")} // hydration error happens here because of isLargeDevice
+      // animate={(hidden ? "hidden" : "visible")}
       onMouseLeave={() => setIsHovered(false)}
       className={`top-0 fixed w-screen ${
         !pathname.includes("/products") ? "sm:sticky" : ""
-      } z-50 
+      }
        ${
          isHovered && !onAboutOrContactPage
            ? "md:bg-white"
