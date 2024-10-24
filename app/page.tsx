@@ -1,6 +1,7 @@
 import FrontImage from "@/components/FrontImage";
 import Product from "@/components/Product";
 import { getProducts } from "../utils/shopify";
+import PreLoad from "@/components/PreLoad";
 
 export default async function Home() {
   const shopifyProducts = await getProducts();
@@ -9,6 +10,7 @@ export default async function Home() {
 
   return (
     <main className="flex top-12 flex-col">
+      <PreLoad />
       <section className="overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
           <FrontImage

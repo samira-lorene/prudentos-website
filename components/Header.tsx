@@ -5,7 +5,8 @@ import { PiHeartThin, PiHeartFill } from "react-icons/pi";
 import FavoritesModal from "./FavoritesModal";
 import CartModal from "./CartModal";
 import useStore from "@/app/(store)/store";
-import { useMediaQuery } from "react-responsive";
+// import { useMediaQuery } from "react-responsive";
+import useMediaQuery from "./useMediaQuery";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Menu from "./Menu";
 import { Cross1Icon } from "@radix-ui/react-icons";
@@ -32,7 +33,8 @@ export default function Header() {
     (state: any) => state.openCartModalStatus
   );
 
-  const isLargeDevice = useMediaQuery({ query: "(min-width: 768px)" });
+  // const isLargeDevice = useMediaQuery({ query: "(min-width: 768px)" });
+  const isLargeDevice = useMediaQuery("(min-width: 768px)");
 
   // menu for mobile screens
   const [openMenu, setOpenMenu] = useState(false);

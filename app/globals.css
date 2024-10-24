@@ -5,6 +5,40 @@
 body {
   height: 100%;
 }
+
+.preloader {
+  overflow: hidden;
+  opacity: 0;
+}
+
+.preloader__background {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.preloader__text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  line-height: 1;
+  z-index: 10001;
+  color: white;
+}
+
+.preloader__text span {
+  display: block;
+}
+
 .borderr {
   border: 1px solid red;
 }
@@ -15,6 +49,28 @@ body {
   height: 100vh; /* Full height of the viewport */
   overflow: hidden; /* Hide overflow to prevent scrollbars */
 }
+
+/* Media query for small screens (sm) */
+@media (max-width: 500px) { 
+  .video-container {
+    height: 75vh; /* Set height to 80vh for small screens */
+  }
+}
+
+/* Media query for medium screens (md) */
+@media (min-width: 768px) { 
+  .video-container {
+    height: 85vh; /* Keep height at 80vh for medium screens */
+  }
+}
+
+@media (min-width: 1024px) {
+  .video-container {
+    height: 95vh; 
+  }
+}
+
+
 
 video {
   position: absolute;
@@ -28,7 +84,6 @@ video {
   object-position: center; /* Focus on the center of the video */
   transform: translate(-50%, -50%); /* Center the video */
 }
-
 
 .headerLink {
   cursor: pointer;

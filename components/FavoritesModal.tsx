@@ -14,13 +14,11 @@ export default function FavoritesModal({
   const removeFavorite = useStore((state: any) => state.removeFavorite);
 
   const handleAddToCart = async (favoriteId: string) => {
-    console.log("add to cart");
+    // console.log("add to cart");
     console.log(favoriteId);
 
     let cartId = sessionStorage.getItem("cartId") || "";
-    console.log("cartId", cartId);
     if (cartId) {
-      console.log("updating cart");
       await updateCart(cartId, favoriteId, 1);
     } else {
       let data = await addToCart(favoriteId, 1);

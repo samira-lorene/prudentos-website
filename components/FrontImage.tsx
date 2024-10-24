@@ -13,7 +13,7 @@ export default function GalleryCell({
     <div>
       <div
         style={{ aspectRatio: "9/12" }}
-        className="relative vide-container w-full flex max-h-[95vh] flex-col transition-opacity duration-200"
+        className="relative video-container w-full flex flex-col transition-opacity duration-200"
       >
         <video autoPlay loop muted preload="none" poster={posterSrc}>
           <source src={src} type="video/webm" />
