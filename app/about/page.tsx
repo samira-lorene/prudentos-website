@@ -2,18 +2,19 @@ import React from "react";
 import Image from "next/image";
 
 export default function About() {
+
   return (
     <div className="h-fit w-fit">
       <div className="z-40 fixed inset-0 bg-black opacity-50"></div>
 
       <Image
-        src="/about_vertical.jpeg"
+        src="/about_vertical.webp"
         alt="about image"
         fill
         className="object-cover md:hidden"
       />
       <Image
-        src="/about_horizontal.jpeg"
+        src="/about_horizontal.webp"
         alt="hero"
         fill
         className="object-cover hidden md:block"

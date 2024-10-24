@@ -8,13 +8,13 @@ export default function Contact() {
       <div className="z-40 fixed inset-0 bg-black opacity-50"></div>
 
       <Image
-        src="/image00003.jpeg"
+        src="/image00003.webp"
         alt="contact image"
         fill
         className="object-cover md:hidden"
       />
       <Image
-        src="/contact.jpeg"
+        src="/contact.webp"
         alt="hero"
         fill
         className="object-cover hidden md:block"

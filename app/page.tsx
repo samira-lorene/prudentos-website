@@ -11,9 +11,17 @@ export default async function Home() {
     <main className="flex top-12 flex-col">
       <section className="overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
-          <FrontImage src={"/BLAU.webm"} title='"Back to work"' />
+          <FrontImage
+            src={"/BLAU.webm"}
+            title='"Back to work"'
+            posterSrc="/temp_poster_blau.png"
+          />
           <div className="hidden sm:block">
-            <FrontImage src={"/SCHWARZ.webm"} title="Le Chiquito noeud" />
+            <FrontImage
+              src={"/SCHWARZ.webm"}
+              posterSrc="/temp_poster_schwarz.png"
+              title="Le Chiquito noeud"
+            />
           </div>
         </div>
       </section>
@@ -30,7 +38,11 @@ export default async function Home() {
       </section>
       <section className="overflow-hidden">
         <div className="sm:hidden block">
-          <FrontImage src={"/SCHWARZ.webm"} title="Le Chiquito noeud" />
+          <FrontImage
+            src={"/SCHWARZ.webm"}
+            posterSrc="/temp_poster_schwarz.png"
+            title="Le Chiquito noeud"
+          />
         </div>
       </section>
     </main>
