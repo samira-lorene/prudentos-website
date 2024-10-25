@@ -198,7 +198,7 @@ export default function ProductPageContent(product: any, id: string) {
         {/* Backdrop */}
         {openSizeGuide && (
           <div
-            className="fixed top-0 left-0 w-screen fullHeight bg-white opacity-65 z-20"
+            className="fixed top-0 left-0 w-screen h-screen bg-white opacity-65 z-20"
             onClick={() => setOpenSizeGuide(!openSizeGuide)}
           />
         )}
@@ -230,7 +230,7 @@ export default function ProductPageContent(product: any, id: string) {
         <section
           ref={rightContent}
           id="product-details"
-          className="w-full md:w-[45%] flex flex-col justify-center items-center md:fullHeight"
+          className="w-full md:w-[45%] flex flex-col justify-center items-center md:h-screen"
         >
           <div className="w-[60%] md:block hidden py-56">
             <div className={styles.productDetail_title}>
@@ -381,7 +381,7 @@ export default function ProductPageContent(product: any, id: string) {
           </div>
         </section>
         {/* Add to Cart- Button section for smaller screens */}
-        <section className="h-[17vh] bg-white border-t px-5 sm:px-10 flex flex-col items-center justify-center md:hidden sticky bottom-0 left-0 right-0">
+        <section className="h-[17svh] bg-white border-t px-5 sm:px-10 flex flex-col items-center justify-center md:hidden sticky bottom-0 left-0 right-0">
           {/* button add to cart, name, price */}
           <div className="flex justify-between items-center w-full mb-2">
             <span className="font-light tracking-wide">

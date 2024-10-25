@@ -124,7 +124,7 @@ export default function Product({ variantId, ...props }: ProductProps) {
               <div
                 style={{ aspectRatio: "9/12" }}
                 className={`relative w-full flex ${
-                  pathname.includes("/products") ? "h-[83vh]" : ""
+                  pathname.includes("/products") ? "h-[83svh]" : ""
                 } flex-col transition-opacity duration-200`}
               >
                 <Image
