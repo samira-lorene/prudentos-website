@@ -1,0 +1,194 @@
+.productDetail_title {
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+  font-weight: 300;
+  line-height: 1.5rem;
+  color: #2e2e2e;
+}
+
+.productDetail_collection {
+  font-size: 0.7rem;
+  line-height: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-bottom: 1.4rem;
+  color: #2e2e2e;
+}
+
+.productDetail_description {
+  font-size: 0.7rem;
+  line-height: 1rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.productDetail_description ul {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  list-style-type: "- ";
+}
+
+.productDetail_description li {
+  list-style-position: inside;
+  text-align: center;
+}
+
+.sizeHeader {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sizeHeader span {
+  font-size: 0.65rem;
+  color: #2e2e2e;
+}
+
+.color {
+  font-size: 0.8rem;
+  font-weight: "300";
+  color: #2e2e2e;
+}
+
+.headerLink {
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  font-size: 0.65rem;
+  line-height: 1rem;
+  font-weight: 300;
+  color: #a4a4a4;
+}
+.headerLink::after {
+  content: "";
+  height: 1px;
+  background: #a4a4a4;
+  left: 0;
+  bottom: 2px; /* Adjust this value to move the line closer to the text */
+  width: 100%; /* Start with full width */
+  position: absolute;
+  transform: scaleX(0); /* Initially scale the width to 0 */
+  transform-origin: left; /* The animation starts from the left */
+  transition: transform 0.2s ease-in-out;
+}
+.headerLink:hover::after {
+  transform: scaleX(1); /* Scale to full width on hover */
+  transform-origin: left; /* Ensure the line grows from left to right */
+}
+.headerLink::after {
+  transform: scaleX(
+    0
+  ); /* Scale back to 0, but the transform-origin changes to right */
+  transform-origin: right;
+}
+/* ............ */
+
+.parentButton {
+  margin-top: 3rem;
+  cursor: pointer;
+  border: 1px solid black;
+  /* overflow: hidden; */
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1.25rem;
+  font-size: 0.75rem;
+  position: relative;
+  line-height: 1rem;
+}
+
+.notAvailableButton {
+  margin-top: 3rem;
+  cursor: default;
+  border: 1px solid black;
+  /* overflow: hidden; */
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1.25rem;
+  font-size: 0.75rem;
+  position: relative;
+  line-height: 1rem;
+}
+
+@keyframes hide-from-bottom {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0); /* Starting position (visible) */
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -16px, 0); /* Move upwards and fade out */
+  }
+}
+
+@keyframes show-from-bottom {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0); /* Starting position (hidden) */
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0); /* Move downwards and fade in */
+  }
+}
+
+/* Initially show the Black element */
+.blackElement {
+  opacity: 1;
+  transform: translate3d(0, 0, 0); /* Visible and in place initially */
+}
+
+.li {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.addToCartStyles {
+  background-color: black;
+  color: white;
+}
+
+/* Initially hide the White element */
+.whiteElement {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0); /* Initially hidden */
+}
+
+/* On hover, hide the Black element */
+.parentButton:hover .blackElement {
+  animation: hide-from-bottom 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* On hover, show the White element */
+.parentButton:hover .whiteElement {
+  animation: show-from-bottom 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* When hover is removed, reanimate the Black element to show from the bottom */
+.parentButton:not(:hover) .blackElement {
+  animation: show-from-bottom 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* When hover is removed, reanimate the White element to hide upwards */
+.parentButton:not(:hover) .whiteElement {
+  animation: hide-from-bottom 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* backdrop opacity animation */
+.backdropActive {
+  opacity: 0.7;
+  pointer-events: all;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) 0s;
+}
