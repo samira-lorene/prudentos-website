@@ -123,7 +123,7 @@ export default function Header() {
       animate={!isLargeDevice && (hidden ? "hidden" : "visible")} // hydration error happens here because of isLargeDevice
       // animate={(hidden ? "hidden" : "visible")}
       onMouseLeave={() => setIsHovered(false)}
-      className={`top-0 fixed w-screen ${
+      className={`top-0 fixed w-full ${
         !pathname.includes("/products") ? "sm:sticky" : ""
       }
        ${

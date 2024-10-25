@@ -7,17 +7,39 @@ export default function GalleryCell({
   title: string;
   posterSrc: string;
 }) {
-
   return (
     <div>
       <div
         style={{ aspectRatio: "9/12" }}
         className="relative video-container cursor-not-allowed pointer-events-none w-full flex flex-col transition-opacity duration-200"
       >
-        <video autoPlay loop muted playsInline preload="none" poster={posterSrc}>
+        {/* <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="none"
+          poster={posterSrc}
+        >
           <source src={src} type="video/webm" />
           Your browser does not support HTML5 video.
-        </video>
+        </video> */}
+        <div
+          // ref={videoParentRef}
+          dangerouslySetInnerHTML={{
+            __html: `
+              <video
+                loop
+                muted
+                autoplay
+                playsinline
+                preload="metadata"
+                poster={${posterSrc}}
+              >
+              <source src="${src}" type="video/webm"  />
+              </video>`,
+          }}
+        />
         {/* <Image
           className="object-cover"
           fill
