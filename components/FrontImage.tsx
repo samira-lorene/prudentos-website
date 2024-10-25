@@ -1,3 +1,4 @@
+import Image  from "next/image"
 export default function GalleryCell({
   src,
   title,
@@ -11,7 +12,8 @@ export default function GalleryCell({
     <div>
       <div
         style={{ aspectRatio: "9/12" }}
-        className="relative video-container cursor-not-allowed pointer-events-none w-full flex flex-col transition-opacity duration-200"
+        className="relative video-container
+        cursor-not-allowed pointer-events-none w-full flex flex-col transition-opacity duration-200"
       >
         {/* <video
           autoPlay
@@ -24,7 +26,7 @@ export default function GalleryCell({
           <source src={src} type="video/webm" />
           Your browser does not support HTML5 video.
         </video> */}
-        <div
+        {/* <div
           // ref={videoParentRef}
           dangerouslySetInnerHTML={{
             __html: `
@@ -39,14 +41,16 @@ export default function GalleryCell({
               <source src="${src}" type="video/webm"  />
               </video>`,
           }}
-        />
-        {/* <Image
+        /> */}
+
+        <Image
           className="object-cover"
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-          src={src}
+          // src={src}
+          src={"/tuerkis.gif"}
           alt="Picture of the model"
-        /> */}
+        />
         <p className="frontImageText">{title}</p>
       </div>
     </div>
