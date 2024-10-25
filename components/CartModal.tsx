@@ -78,7 +78,6 @@ export default function CartModal({
 
     setLoading(true);
     let cartId = sessionStorage.getItem("cartId") || "";
-    console.log("cartId", cartId);
     if (cartId) {
       await updateCartItemQuantity(cartId, nodeId, newQuantity);
     }
@@ -96,25 +95,19 @@ export default function CartModal({
 
   const handleCheckout = () => {
     setOpenCartModal();
-    window.open(checkoutUrl, "_blank");
-    window.location.replace("/");
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = checkoutUrl; // Navigates to the checkout URL in the same tab
+    // window.location.replace("/");
   };
 
-  // TODO: fix height of modals on mobile screens
-  // for some reason its completetly broken
-  // i think its somehting to do with: setHeaderHeight() (from cart)
-
-  // TODO: make sure videos (autoPlay of videos) work on iPhone
-
-  // TODO: use dynamic height or inset-0 for the modals
-  // and for the product page on mobile screeens
 
   return (
     <div
-      className={`fixed right-0 flex flex-col px-10 py-6 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
+      className={`fixed right-0 flex flex-col px-10 py-6 w-screen md:w-5/12 bg-white fullHeight shadow-sm md:border-l transition-transform transform duration-700 ${
         openModal ? "translate-x-0" : "translate-x-full"
       }`}
-      style={{ zIndex: 1000 }} 
+      style={{ zIndex: 1000 }}
     >
       <div className="flex items-center justify-between py-2">
         <h1 className="font-light text-xs normal-case">Cart</h1>

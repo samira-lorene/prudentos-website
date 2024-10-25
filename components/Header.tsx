@@ -149,7 +149,7 @@ export default function Header() {
       {/* Backdrop */}
       {(openFavoritesModalStatus || openCartModalStatus) && (
         <div
-          className="fixed top-0 left-0 w-screen h-screen bg-white opacity-65 z-20"
+          className="fixed top-0 left-0 w-screen fullHeight bg-white opacity-65 z-20"
           onClick={
             openFavoritesModalStatus === true
               ? setOpenFavoritesModal

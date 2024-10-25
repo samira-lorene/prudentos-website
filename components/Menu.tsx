@@ -42,7 +42,7 @@ export default function Menu({ setOpenMenu, open, headerHeight }: menuProps) {
   const router = useRouter();
 
   const handleLinkClick = (link: any) => {
-    console.log("link", link);
+    // console.log("link", link);
     setOpenMenu(false);
     router.push(link);
   };

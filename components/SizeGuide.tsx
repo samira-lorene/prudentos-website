@@ -40,13 +40,12 @@ Viscose 70%
 Polyester 30% 
 
 Alles mit Handwäsche waschen
-Das kommt in description
     */
   }
 
   return (
     <div
-      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
+      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white fullHeight shadow-sm md:border-l transition-transform transform duration-700 ${
         openModal ? "translate-x-0" : "translate-x-full"
       }`}
       style={{ zIndex: openModal ? 1100 : 1100 }} // Increase z-index when sidebar is open

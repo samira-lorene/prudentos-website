@@ -15,7 +15,6 @@ export default function FavoritesModal({
 
   const handleAddToCart = async (favoriteId: string) => {
     // console.log("add to cart");
-    console.log(favoriteId);
 
     let cartId = sessionStorage.getItem("cartId") || "";
     if (cartId) {
@@ -30,7 +29,7 @@ export default function FavoritesModal({
 
   return (
     <div
-      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white h-screen shadow-sm md:border-l transition-transform transform duration-700 ${
+      className={`fixed top-0 flex flex-col px-8 py-6 right-0 w-screen md:w-5/12 bg-white fullHeight shadow-sm md:border-l transition-transform transform duration-700 ${
         openModal ? "translate-x-0" : "translate-x-full"
       }`}
       style={{ zIndex: 1000 }} 
