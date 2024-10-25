@@ -40,6 +40,7 @@ Viscose 70%
 Polyester 30% 
 
 Alles mit Handwäsche waschen
+Das kommt in description
     */
   }
 
