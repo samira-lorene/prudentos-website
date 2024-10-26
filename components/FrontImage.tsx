@@ -17,7 +17,7 @@ export default function GalleryCell({
         className="relative video-container
         cursor-not-allowed pointer-events-none w-full flex flex-col transition-opacity duration-200"
       >
-        <div className="hidden md:block">
+        {/* <div className="hidden md:block">
           <video
             autoPlay
             loop
@@ -29,10 +29,11 @@ export default function GalleryCell({
             <source src={src} type="video/webm" />
             Your browser does not support HTML5 video.
           </video>
-        </div>
+        </div> */}
 
         <Image
-          className="object-cover block md:hidden"
+          // block md:hidden
+          className="object-cover"
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
           src={gifSrc}
