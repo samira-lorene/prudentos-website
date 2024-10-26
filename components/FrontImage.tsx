@@ -1,12 +1,14 @@
-import Image  from "next/image"
+import Image from "next/image";
 export default function GalleryCell({
   src,
   title,
   posterSrc,
+  gifSrc,
 }: {
   src: string;
   title: string;
   posterSrc: string;
+  gifSrc: string;
 }) {
   return (
     <div>
@@ -15,40 +17,25 @@ export default function GalleryCell({
         className="relative video-container
         cursor-not-allowed pointer-events-none w-full flex flex-col transition-opacity duration-200"
       >
-        {/* <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-          poster={posterSrc}
-        >
-          <source src={src} type="video/webm" />
-          Your browser does not support HTML5 video.
-        </video> */}
-        {/* <div
-          // ref={videoParentRef}
-          dangerouslySetInnerHTML={{
-            __html: `
-              <video
-                loop
-                muted
-                autoplay
-                playsinline
-                preload="metadata"
-                poster={${posterSrc}}
-              >
-              <source src="${src}" type="video/webm"  />
-              </video>`,
-          }}
-        /> */}
+        <div className="hidden md:block">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="none"
+            poster={posterSrc}
+          >
+            <source src={src} type="video/webm" />
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
 
         <Image
-          className="object-cover"
+          className="object-cover block md:hidden"
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-          // src={src}
-          src={"/tuerkis.gif"}
+          src={gifSrc}
           alt="Picture of the model"
         />
         <p className="frontImageText">{title}</p>

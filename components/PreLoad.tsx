@@ -34,7 +34,7 @@ export default function PreLoad() {
         textRef.current,
         {
           yPercent: 0,
-          delay: 0.2,
+          delay: 0.3,
         },
         "<"
       )

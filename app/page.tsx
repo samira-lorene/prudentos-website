@@ -17,13 +17,15 @@ export default async function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
           <FrontImage
             src={"/GRUEN_web.webm"}
+            gifSrc="/gruen.gif"
             title="Enfant Sauvage"
-            posterSrc="/gruen.webp"
+            posterSrc="/gruen_poster.webp"
           />
           <div className="hidden sm:block">
             <FrontImage
+              gifSrc="/schwarz.gif"
               src={"/SCHWARZ_web.webm"}
-              posterSrc="/schwarz.webp"
+              posterSrc="/schwarz_poster.webp"
               title="Ma vie"
             />
           </div>
@@ -43,8 +45,9 @@ export default async function Home() {
       <section className="overflow-hidden">
         <div className="sm:hidden block">
           <FrontImage
+            gifSrc="/tuerkis.gif"
             src={"/TUERKIS_web.webm"}
-            posterSrc="/tuerkis.webp"
+            posterSrc="/tuerkis_poster.webp"
             title="En voyage"
           />
         </div>
@@ -52,14 +55,16 @@ export default async function Home() {
       <section className="overflow-hidden hidden sm:block">
         <div className="grid grid-cols-1 sm:grid-cols-2 opacity-90">
           <FrontImage
+            gifSrc="/tuerkis.gif"
             src={"/TUERKIS_web.webm"}
             title="En voyage"
-            posterSrc="/tuerkis.webp"
+            posterSrc="/tuerkis_poster.webp"
           />
           <div className="hidden sm:block">
             <FrontImage
+              gifSrc="/blau.gif"
               src={"/BLAU_web.webm"}
-              posterSrc="/blau.webp"
+              posterSrc="/blau_poster.webp"
               title="Amour"
             />
           </div>
